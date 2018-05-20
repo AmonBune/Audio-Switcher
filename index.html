@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="main.css">
+		<title>Seamless Audio Switch</title>
+		
+		<!--JS-->
+		<script type="text/javascript">
+			function sleep(ms)
+			{
+				return new Promise(resolve => setTimeout(resolve, ms));
+			}
+			
+			function get_audio1_volume()
+			{
+				return Math.round(document.getElementById('audio1').volume * 100) / 100;
+			}
+		
+			function get_audio2_volume()
+			{
+				return Math.round(document.getElementById('audio2').volume * 100) / 100;
+			}
+		
+			async function switch_audio()
+			{
+				if(get_audio1_volume() > get_audio2_volume())
+				{
+					document.getElementById('indicator').innerHTML =
+					"We are inside <br/><br/> <div style='width:130px; padding:10px; color:white; background:gray;'>Going outside...</div>";
+				
+					while(document.getElementById('audio1').volume > 0)
+					{
+						document.getElementById('audio1').volume = get_audio1_volume() - 0.1;
+						document.getElementById('audio2').volume = get_audio2_volume() + 0.1;
+						
+						await sleep(500);
+						
+						if(get_audio1_volume() == 0)
+						{						
+							document.getElementById('indicator').style.background = "blue";
+							document.getElementById('indicator').innerHTML =
+							"We are now outside <br/><br/> <button onclick='switch_audio()' style='padding:10px; width:150px;'>Go inside</button>";
+						}
+					}
+				}
+				else
+				{
+					document.getElementById('indicator').innerHTML =
+					"We are outside <br/><br/> <div style='width:130px; padding:10px; color:white; background:gray;'>Going inside...</div>";
+				
+					while(get_audio2_volume() > 0)
+					{
+						document.getElementById('audio1').volume = get_audio1_volume() + 0.1;
+						document.getElementById('audio2').volume = get_audio2_volume() - 0.1;
+						
+						await sleep(500);
+						
+						if(get_audio2_volume() == 0)
+						{						
+							document.getElementById('indicator').style.background = "green";
+							document.getElementById('indicator').innerHTML =
+							"We are now inside <br/><br/> <button onclick='switch_audio()' style='padding:10px; width:150px;'>Go outside</button>";
+						}
+					}
+				}
+			}
+			
+			window.onload = function()
+			{
+				document.getElementById('audio1').volume = 1;
+				document.getElementById('audio2').volume = 0;
+			}
+		</script>
+	</head>
+	<body id="body" style='font-family: "Open Sans","arial","sans-serif";'>
+		<h1>Seamless Audio Switcher</h1>
+		
+		<div class="center">		
+			<h2>An audio switcher demonstrated on Hyrule Castle music from BotW.</h2>
+			<h3>How it works:</h3>
+			<p>Both music files are loaded and played on start. Audio 1 has volume 100%. Audio 2 has volume: 0%</p>
+			<p>On a switch, audio 1 decreases and audio 2 increases its volume slowly until audio 1 reaches 0% and audio 2 reaches 100%.</p>
+			<br/><br/>
+		
+			<h2>Toggle inside/outside</h2>
+			<div id="indicator">We are inside
+				<br/><br/>
+				<button onclick="switch_audio()" style="padding:10px; width:150px;">Go outside</button>
+			</div>
+			<br/><br/>
+			
+			<h2>Reload audio</h2>
+			<button onclick="location.reload()" style="padding:10px;">Reload audio</button>			
+			<br/><br/>
+			
+			<h2>Music Status</h2>
+			<audio id="audio1" src="Hyrule Castle Inside.mp3" controls autoplay loop></audio>
+			<audio id="audio2" src="Hyrule Castle Outside.mp3" controls autoplay loop></audio>
+			<br/><br/>
+		</div>
+		<p id="copyright">The used music files belong to <a href="https://www.nintendo.com/">Nintendo</a>.</p>
+	</body>
+</html>

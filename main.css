@@ -1,0 +1,57 @@
+body {
+	margin: 0;
+
+	background-color: lightblue;
+	
+	font-family: Impact;
+	/*font-size: 24pt;*/
+}
+
+h1 {
+	font-size: 48pt;
+	color: black;
+	text-shadow: 1px 1px 2px black, 0 0 1em white, 0 0 0.2em white;
+	text-align: center;
+}
+
+.center {
+	text-align: center;
+}
+
+#indicator {
+	display: inline-block;
+	text-align: center;
+	width: 150px;
+	padding: 10px;
+	color: white;
+	background: green;
+}
+
+.pull-left {
+	float: left;
+}
+
+.pull-right {
+	float: right;
+}
+
+br {
+	
+}
+
+p {
+	display: block;
+	margin: 10px;
+	padding: 10px;
+	
+	text-decoration: none;
+	color: white;
+	text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
+	text-align: center;
+	
+	background-color: rgba(0,0,0,0.5);
+}
+
+a {
+	color: white;
+}
