@@ -1,2 +1,2 @@
 # Audio-Switcher
-An audio switcher with a slow fade.
+An audio switcher with a slow fading effect.
